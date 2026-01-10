@@ -9,7 +9,7 @@ export interface Item {
 export type LegendItems = Item[];
 export const defaultItems: LegendItems = [];
 export const defaultItem: Item = {
-    id: 1,
+    id: Date.now(),
     label: '',
     value: '',
     textColor: 'black',

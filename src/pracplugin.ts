@@ -17,12 +17,12 @@ export class PracPlugin extends PluginBase {
     }
     addLegendItem(item: Item) {
         this._paneViews[0].addItem({ ...defaultItem, ...item });
-        this.requestUpdate(); // ✅ REQUIRED
+        this.requestUpdate();
     }
 
     updateLegendItems(newItems: LegendItems = []) {
         this._paneViews[0].updateItems(newItems);
-        this.requestUpdate(); // ✅ REQUIRED
+        this.requestUpdate();
     }
 
     paneViews() {
