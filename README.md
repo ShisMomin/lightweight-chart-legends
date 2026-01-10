@@ -1,8 +1,27 @@
 # Legends - Lightweight Charts™ Plugin
 
-Description of the Plugin.
+A custom **Legend plugin** built for **Lightweight Charts™** using the official **primitive plugin architecture**.
 
--   Developed for Lightweight Charts version: `v5.0.0`
+This plugin renders a fully customizable legend **inside the chart pane**, supports **dynamic updates**, **crosshair-based value syncing**, and automatically **wraps legend items to the next line** when space runs out — ensuring the legend never overflows the chart.
+
+## ✨ Features
+
+-   📌 Renders legend **inside the chart pane**
+-   🔄 Updates legend values on **crosshair move**
+-   📐 Automatic line wrapping (flex-like layout)
+-   🎨 Per-item styling (color, font, size)
+-   ⚡ High-DPI (retina) safe rendering
+-   🧩 Built using **Lightweight Charts primitives**
+
+## 📦 Built With
+
+-   [Lightweight Charts™](https://github.com/tradingview/lightweight-charts)
+-   Primitive Plugin API (`ISeriesPrimitive`)
+-   `fancy-canvas` for high-DPI rendering
+-   TypeScript
+
+**Compatible with:**  
+`lightweight-charts@v5.0.0`
 
 ## Running Locally
 
@@ -20,19 +39,3 @@ npm run compile
 ```
 
 Check the output in the `dist` folder.
-
-## Publishing To NPM
-
-You can configure the contents of the package's `package.json` within the
-`compile.mjs` script.
-
-Once you have compiled the plugin (see above section) then you can publish the
-package to NPM with these commands:
-
-```shell
-cd dist
-npm publish
-```
-
-Hint: append `--dry-run` to the end of the publish command to see the results of
-the publish command without actually uploading the package to NPM.
