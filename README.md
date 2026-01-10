@@ -1,8 +1,8 @@
-# pracPlugin - Lightweight Charts™ Plugin
+# Legends - Lightweight Charts™ Plugin
 
 Description of the Plugin.
 
-- Developed for Lightweight Charts version: `v5.0.0`
+-   Developed for Lightweight Charts version: `v5.0.0`
 
 ## Running Locally
 

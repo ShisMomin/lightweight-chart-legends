@@ -1,50 +1,3 @@
-// import { CanvasRenderingTarget2D } from 'fancy-canvas';
-// import { IPrimitivePaneRenderer } from 'lightweight-charts';
-// import { ViewPoint } from './pane-view';
-// import { positionsBox } from './helpers/dimensions/positions';
-
-// export class PracPluginPaneRenderer implements IPrimitivePaneRenderer {
-//     _p1: ViewPoint;
-//     _p2: ViewPoint;
-//     _fillColor: string;
-
-//     constructor(p1: ViewPoint, p2: ViewPoint, fillColor: string) {
-//         this._p1 = p1;
-//         this._p2 = p2;
-//         this._fillColor = fillColor;
-//     }
-
-//     draw(target: CanvasRenderingTarget2D) {
-//         target.useBitmapCoordinateSpace((scope) => {
-//             if (
-//                 this._p1.x === null ||
-//                 this._p1.y === null ||
-//                 this._p2.x === null ||
-//                 this._p2.y === null
-//             )
-//                 return;
-//             const ctx = scope.context;
-//             const horizontalPositions = positionsBox(
-//                 this._p1.x,
-//                 this._p2.x,
-//                 scope.horizontalPixelRatio
-//             );
-//             const verticalPositions = positionsBox(
-//                 this._p1.y,
-//                 this._p2.y,
-//                 scope.verticalPixelRatio
-//             );
-//             ctx.fillStyle = this._fillColor;
-//             ctx.fillRect(
-//                 horizontalPositions.position,
-//                 verticalPositions.position,
-//                 horizontalPositions.length,
-//                 verticalPositions.length
-//             );
-//         });
-//     }
-// }
-
 import { CanvasRenderingTarget2D } from 'fancy-canvas';
 import { IPrimitivePaneRenderer } from 'lightweight-charts';
 import { LegendItems } from './options';
@@ -57,43 +10,6 @@ function formatLabeledValue(
 
     return `${label}: ${value}`;
 }
-
-// export class LegendPaneRenderer implements IPrimitivePaneRenderer {
-//     private _items: LegendItems = [];
-
-//     constructor(legendItems: LegendItems) {
-//         this._items = [...legendItems];
-//     }
-
-//     draw(target: CanvasRenderingTarget2D) {
-//         target.useBitmapCoordinateSpace((scope) => {
-//             const ctx = scope.context;
-//             const hRatio = scope.horizontalPixelRatio;
-//             const vRatio = scope.verticalPixelRatio;
-
-//             let x = 10 * hRatio; // left padding
-//             const y = 10 * vRatio; // top padding
-//             const gap = 16 * hRatio; // space between items
-//             ctx.textBaseline = 'top';
-//             for (const item of this._items) {
-//                 // Build display text
-//                 // const text = `${item.label}: ${item.value}`;
-//                 const text = formatLabeledValue(item.label, item.value);
-
-//                 // Apply font per item
-//                 ctx.font = `${item.fontSize! * vRatio}px ${item.fontFamily}`;
-//                 ctx.fillStyle = item.textColor!;
-
-//                 // Draw text
-//                 ctx.fillText(text, x, y);
-
-//                 // Measure width for flex-like layout
-//                 const metrics = ctx.measureText(text);
-//                 x += metrics.width + gap;
-//             }
-//         });
-//     }
-// }
 
 export class LegendPaneRenderer implements IPrimitivePaneRenderer {
     private _items: LegendItems = [];
