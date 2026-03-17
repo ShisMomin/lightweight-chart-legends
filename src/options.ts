@@ -1,5 +1,5 @@
 export interface Item {
-    id: number;
+    id: number | string;
     label: string;
     value: number | string;
     textColor?: string;

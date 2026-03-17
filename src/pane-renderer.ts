@@ -2,9 +2,9 @@ import { CanvasRenderingTarget2D } from 'fancy-canvas';
 import { IPrimitivePaneRenderer } from 'lightweight-charts';
 import { LegendItems } from './options';
 
-function formatLabeledValue(
+function formatLabelValue(
     label: string = '',
-    value: string | number = '∅'
+    value: string | number = '∅',
 ): string {
     if (label.length <= 0) return `${value}`;
 
@@ -35,7 +35,7 @@ export class LegendPaneRenderer implements IPrimitivePaneRenderer {
     //         ctx.textBaseline = 'top';
 
     //         for (const item of this._items) {
-    //             const text = formatLabeledValue(item.label, item.value);
+    //             const text = formatLabelValue(item.label, item.value);
 
     //             // ✅ DO NOT multiply fontSize by vRatio
     //             ctx.font = `${item.fontSize}px ${item.fontFamily}`;
@@ -48,19 +48,18 @@ export class LegendPaneRenderer implements IPrimitivePaneRenderer {
     //         }
     //     });
     // }
-
+    // For a legend: Use useMediaCoordinateSpace
+    // For pixel-perfect overlays or sharp lines: Use useBitmapCoordinateSpace
     draw(target: CanvasRenderingTarget2D) {
-        target.useBitmapCoordinateSpace((scope) => {
+        target.useMediaCoordinateSpace((scope) => {
             const ctx = scope.context;
-            const hRatio = scope.horizontalPixelRatio;
-            const vRatio = scope.verticalPixelRatio;
 
-            const paddingX = 10 * hRatio;
-            const paddingY = 10 * vRatio;
-            const gapX = 16 * hRatio;
-            const gapY = 6 * vRatio;
+            const paddingX = 10;
+            const paddingY = 10;
+            const gapX = 16;
+            const gapY = 6;
 
-            const maxWidth = scope.bitmapSize.width;
+            const maxWidth = scope.mediaSize.width;
 
             let x = paddingX;
             let y = paddingY;
@@ -68,19 +67,15 @@ export class LegendPaneRenderer implements IPrimitivePaneRenderer {
             ctx.textBaseline = 'top';
 
             for (const item of this._items) {
-                const text = formatLabeledValue(item.label, item.value);
+                const text = formatLabelValue(item.label, item.value);
 
                 ctx.font = `${item.fontSize}px ${item.fontFamily}`;
                 ctx.fillStyle = item.textColor!;
 
                 const metrics = ctx.measureText(text);
                 const textWidth = metrics.width;
-                const textHeight =
-                    metrics.actualBoundingBoxAscent +
-                        metrics.actualBoundingBoxDescent ||
-                    item.fontSize! * vRatio;
+                const textHeight = item.fontSize!;
 
-                // 👉 Wrap to next line if no space
                 if (x + textWidth > maxWidth - paddingX) {
                     x = paddingX;
                     y += textHeight + gapY;
@@ -92,3 +87,43 @@ export class LegendPaneRenderer implements IPrimitivePaneRenderer {
         });
     }
 }
+
+// target.useBitmapCoordinateSpace((scope) => {
+//     const ctx = scope.context;
+//     const hRatio = scope.horizontalPixelRatio;
+//     const vRatio = scope.verticalPixelRatio;
+
+//     const paddingX = 10 * hRatio;
+//     const paddingY = 10 * vRatio;
+//     const gapX = 16 * hRatio;
+//     const gapY = 6 * vRatio;
+
+//     const maxWidth = scope.bitmapSize.width;
+
+//     let x = paddingX;
+//     let y = paddingY;
+
+//     ctx.textBaseline = 'top';
+
+//     for (const item of this._items) {
+//         const text = formatLabelValue(item.label, item.value);
+
+//         ctx.font = `${item.fontSize}px ${item.fontFamily}`;
+//         ctx.fillStyle = item.textColor!;
+
+//         const metrics = ctx.measureText(text);
+//         const textWidth = metrics.width;
+//         const textHeight =
+//             metrics.actualBoundingBoxAscent +
+//                 metrics.actualBoundingBoxDescent ||
+//             item.fontSize! * vRatio;
+
+//         if (x + textWidth > maxWidth - paddingX) {
+//             x = paddingX;
+//             y += textHeight + gapY;
+//         }
+
+//         ctx.fillText(text, x, y);
+//         x += textWidth + gapX;
+//     }
+// });

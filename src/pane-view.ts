@@ -25,6 +25,12 @@ export class LegendPaneView implements IPrimitivePaneView {
             return updated ? { ...it, ...updated } : it;
         });
     }
+    checkIsItemExistById(id: number | string) {
+        return this._items.some((it) => it.id === id);
+    }
+    removeItem(id: number | string) {
+        this._items = this._items.filter((it) => it.id !== id);
+    }
 
     renderer() {
         return this._renderer;
