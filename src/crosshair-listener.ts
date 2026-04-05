@@ -36,6 +36,9 @@ export class CrosshairListener extends PluginBase {
                 this.onCandleStickSeriesCrosshairEvent,
             );
         }
+        if (this.series.seriesType() === 'Histogram') {
+            chart.subscribeCrosshairMove(this.onHistogramSeriesCrosshairEvent);
+        }
     }
     override detached() {
         if (this.series.seriesType() === 'Line') {
@@ -46,6 +49,11 @@ export class CrosshairListener extends PluginBase {
         if (this.series.seriesType() === 'Candlestick') {
             this.chart.unsubscribeCrosshairMove(
                 this.onCandleStickSeriesCrosshairEvent,
+            );
+        }
+        if (this.series.seriesType() === 'Histogram') {
+            this.chart.unsubscribeCrosshairMove(
+                this.onHistogramSeriesCrosshairEvent,
             );
         }
         super.detached();
@@ -131,6 +139,18 @@ export class CrosshairListener extends PluginBase {
         this.updateohlcData({ currohlcValues, lastohlcValues });
     };
     private onLineSeriesCrosshairEvent = (param: MouseEventParams) => {
+        const data = param.seriesData.get(this.series) as LineData;
+        if (!data || !this._legendObj) return;
+        // console.log(this._legendObj);
+        for (let i = 0; i < this._legendUpdateData.length; i++) {
+            const ele = this._legendUpdateData[i];
+            this._legendObj.updateLegendItems([
+                { ...ele, value: data?.value.toFixed(this._numDecimal) },
+            ]);
+        }
+        // console.log(data);
+    };
+    private onHistogramSeriesCrosshairEvent = (param: MouseEventParams) => {
         const data = param.seriesData.get(this.series) as LineData;
         if (!data || !this._legendObj) return;
         // console.log(this._legendObj);
